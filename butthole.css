@@ -6,7 +6,7 @@ body {
 #title {
   position: absolute;
   top: 5px;
-  left: 5px;
+  left: 25px;
   color: #fff;
   z-index: 5;
 }
@@ -30,6 +30,10 @@ body {
 
 #game.puckered {
   background-image: url('/img/perfect-butthole-puckered.jpg');
+}
+
+#game.puckered2 {
+  background-image: url('/img/perfect-butthole-puckered2.jpg');
 }
 
 .kiss {

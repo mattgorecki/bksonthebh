@@ -7,6 +7,7 @@ $(function() {
   var preloads = [
     '/img/lipstick-64.png',
     '/img/perfect-butthole-relaxed.jpg',
+    '/img/perfect-butthole-puckered.jpg',
     '/img/perfect-butthole-puckered.jpg'
   ];
 
@@ -29,7 +30,7 @@ $(function() {
 
   $.ionSound.play('sexytime');
   setTimeout(function() {
-    gameElement.fadeIn(3000);
+    gameElement.fadeIn(6000);
   }, 3000);
 
   function createKiss(x,y) {
@@ -40,6 +41,7 @@ $(function() {
     kiss.attr("id", uniqueId);
     kiss.css("left", x - 32);
     kiss.css("top", y - 28);
+    kiss.css({ WebkitTransform: 'rotate(' + randomRotation() + 'deg)'});
     kiss.appendTo(gameElement);
 
     gameElement.removeClass("relaxed").addClass("puckered");
@@ -52,7 +54,9 @@ $(function() {
     $.ionSound.play(randomKissSound);
 
     setTimeout(function(){
-      $("#" + uniqueId).fadeOut().remove();  
+      $("#" + uniqueId).fadeOut("slow", function() {
+        $(this).remove();
+      });
     }, kissTimeout);
   }
 
@@ -60,10 +64,23 @@ $(function() {
     kisses++;
     $("#kissCount").html(kisses);
   }
+
+  function randomRotation() {
+    var min = -30;
+    var max = 60;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
   
   $("#game").click(function(e) {
-    // The butthole hath been kissed.
     createKiss(e.pageX, e.pageY);
     countKiss();
+
+    if (kisses % Math.floor((Math.random()*10)+3) == 0) {
+      gameElement.removeClass("relaxed").addClass("puckered2");
+
+      setTimeout(function() {
+        gameElement.removeClass("puckered2").addClass("relaxed");
+      }, puckerTimeout);
+    }
   });
 });
