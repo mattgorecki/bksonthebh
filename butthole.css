@@ -59,6 +59,14 @@ body {
   margin: 0 auto;
 }
 
+#touchscreen {
+  position: absolute;
+  width: 800px;
+  height: 777px;
+  z-index: 9999;
+  margin: 0 auto;
+}
+
 #game.relaxed {
   background-image: url('/img/perfect-butthole-relaxed.jpg');
 }

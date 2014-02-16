@@ -8,15 +8,18 @@ $(function() {
     '/img/lipstick-64.png',
     '/img/perfect-butthole-relaxed.jpg',
     '/img/perfect-butthole-puckered.jpg',
-    '/img/perfect-butthole-puckered.jpg'
+    '/img/perfect-butthole-puckered2.jpg'
   ];
+
+  preloads.forEach(function(i){
+    $('<img/>')[0].src = i;
+  });
 
   var sounds = [
     'kiss1',
     'kiss2',
     'kiss3',
-    'kiss4',
-    'sexytime'
+    'kiss4'
   ];
 
   var bgMusic = $('#audio-bg')[0];
@@ -31,16 +34,11 @@ $(function() {
   }, false);
   bgMusic.play();
 
-  preloads.forEach(function(i){
-    $('<img/>')[0].src = i;
-  });
-
   $.ionSound({
     sounds: sounds,
     path: "sounds/"
   });
 
-  $.ionSound.play('sexytime');
   setTimeout(function() {
     gameElement.fadeIn(6000);
   }, 3000);
