@@ -1,21 +1,24 @@
 body {
-  background-color: #000;
+  background-image: url('img/old_map.png');
   font-family: Helvetica, Arial, sans-serif;
+  min-width: 1150px;
+  padding: 0px;
+  margin: 0px;
 }
 
 #title {
   position: absolute;
   top: 5px;
   left: 25px;
-  color: #fff;
+  color: #000;
   z-index: 5;
 }
 
 #help {
   position: absolute;
-  bottom: 5px;
+  bottom: 30px;
   left: 25px;
-  color: #fff;
+  color: #000;
   z-index: 5;
 }
 
@@ -26,10 +29,11 @@ body {
 
 #togglemusic {
   position: absolute;
-  bottom: 5px;
-  right: 25px;
-  color: #fff;
+  bottom: 25px;
+  left: 25px;
+  color: #000;
   z-index: 5;
+  font-size: 0.8em;
 }
 
 #togglemusic:hover {
@@ -49,7 +53,7 @@ body {
   position: relative;
   width: 800px;
   height: 777px;
-  z-index: 0;
+  z-index: 3;
   display: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -60,11 +64,13 @@ body {
 }
 
 #touchscreen {
+  background-color: #f00;
   position: absolute;
   width: 800px;
   height: 777px;
   z-index: 9999;
   margin: 0 auto;
+  opacity: 0.5;
 }
 
 #game.relaxed {
@@ -89,4 +95,11 @@ body {
 
 #kissCount {
   font-size: 2.0em;
+}
+
+#adcontainer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
 }
