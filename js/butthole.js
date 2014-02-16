@@ -19,6 +19,18 @@ $(function() {
     'sexytime'
   ];
 
+  var bgMusic = $('#audio-bg')[0];
+  var playing = true;
+  
+  bgMusic.volume = .6;
+  bgMusic.addEventListener('ended', function() {
+    this.currentTime = 0;
+    if (playing) {
+      this.play();
+    }
+  }, false);
+  bgMusic.play();
+
   preloads.forEach(function(i){
     $('<img/>')[0].src = i;
   });
@@ -72,7 +84,7 @@ $(function() {
   }
   
   $("#game").click(function(e) {
-    createKiss(e.pageX, e.pageY);
+    createKiss(e.offsetX, e.offsetY);
     countKiss();
 
     if (kisses % Math.floor((Math.random()*10)+3) == 0) {
@@ -83,4 +95,21 @@ $(function() {
       }, puckerTimeout);
     }
   });
+
+  $("#help").hover(function() {
+    $("#kissthebutthole").fadeIn('fast');
+  }, function() {
+    $("#kissthebutthole").fadeOut('slow');
+  });
+
+  $('#togglemusic').click(function() {
+    if (!bgMusic.paused) {
+      bgMusic.pause();
+      playing = false;
+    } else {
+      bgMusic.play();
+      playing = true;
+    }
+  });
+  
 });

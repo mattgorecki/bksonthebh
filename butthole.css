@@ -11,7 +11,42 @@ body {
   z-index: 5;
 }
 
+#help {
+  position: absolute;
+  bottom: 5px;
+  left: 25px;
+  color: #fff;
+  z-index: 5;
+}
+
+#help:hover {
+  color: #F2FFB3;
+  cursor: pointer;
+}
+
+#togglemusic {
+  position: absolute;
+  bottom: 5px;
+  right: 25px;
+  color: #fff;
+  z-index: 5;
+}
+
+#togglemusic:hover {
+  color: #F2FFB3;
+  cursor: pointer;
+}
+
+#kissthebutthole {
+  position: absolute;
+  top: 410px;
+  left: 455px;
+  z-index: 6;
+  display:none;
+}
+
 #game {
+  position: relative;
   width: 800px;
   height: 777px;
   z-index: 0;
