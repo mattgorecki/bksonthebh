@@ -4,16 +4,24 @@
 <script src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js'></script>
 <script src='js/ion-sound/ion.sound.min.js'></script>
 <script src='js/butthole.js'></script>
-<link rel="stylesheet" type="text/css" href="butthole.css">
+<link rel="stylesheet" type="text/css" href="css/butthole.css">
 <meta name="juicyads-site-verification" content="78b8234dcc31359fc3da6c7e23d6eb7c">
 </head>
 <body>
+  <audio id="audio-bg">
+    <source src="sounds/piano.mp3"></source>
+    <source src="sounds/piano.ogg"></source>
+    Your browser isn't invited for super fun audio time.
+  </audio>
   <div id="title">
     <h3><span id="kissCount">0</span>&nbsp; Butterfly Kisses</h3>
   </div>
-  <div id="game" class="relaxed">
-    &nbsp;
-    <img id="kissthebutthole" src="img/kiss-the-butthole.png" />
+  <div id="gamecontainer">
+    <div id="touchscreen"></div>
+    <div id="game" class="relaxed">
+      &nbsp;
+      <img id="kissthebutthole" src="img/kiss-the-butthole.png" />
+    </div>
   </div>
   <div id="help">
     <h4>How to Play</h4>
@@ -21,11 +29,6 @@
   <div id="togglemusic">
     Toggle Music
   </div>
-  <audio id="audio-bg">
-    <source src="sounds/piano.mp3"></source>
-    <source src="sounds/piano.ogg"></source>
-    Your browser isn't invited for super fun audio time.
-  </audio>
   <div id="adcontainer">
     <!--JuicyAds v2.0-->
     <iframe border=0 frameborder=0 marginheight=0 marginwidth=0 width=168 height=608 scrolling=no allowtransparency=true src=http://adserver.juicyads.com/adshow.php?adzone=283358></iframe>

@@ -4,6 +4,7 @@ $(function() {
   var puckerTimeout = 200;
   var kisses = 0;
 
+  // Preload images into hidden img tag
   var preloads = [
     '/img/lipstick-64.png',
     '/img/perfect-butthole-relaxed.jpg',
@@ -15,16 +16,9 @@ $(function() {
     $('<img/>')[0].src = i;
   });
 
-  var sounds = [
-    'kiss1',
-    'kiss2',
-    'kiss3',
-    'kiss4'
-  ];
-
+  // Background audio
   var bgMusic = $('#audio-bg')[0];
   var playing = true;
-  
   bgMusic.volume = .6;
   bgMusic.addEventListener('ended', function() {
     this.currentTime = 0;
@@ -34,14 +28,28 @@ $(function() {
   }, false);
   bgMusic.play();
 
+  // Load game sounds
+  var sounds = [
+    'kiss1',
+    'kiss2',
+    'kiss3',
+    'kiss4'
+  ];
+
   $.ionSound({
     sounds: sounds,
     path: "sounds/"
   });
 
+  // Fade in the game image
   setTimeout(function() {
-    gameElement.fadeIn(6000);
-  }, 3000);
+    gameElement.fadeIn(5000);
+  }, 2000);
+
+  // Fade in the sidebar advertisement
+  setTimeout(function() {
+    $("#adcontainer").show(5000);
+  }, 7000);
 
   function createKiss(x,y) {
     var kiss = $("<div>&nbsp;</div>");
@@ -70,18 +78,21 @@ $(function() {
     }, kissTimeout);
   }
 
+  // Increment kisses and update score
   function countKiss() {
     kisses++;
     $("#kissCount").html(kisses);
   }
 
+  // Helper function to give kisses a random rotation
   function randomRotation() {
     var min = -30;
     var max = 60;
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  
-  $("#game").click(function(e) {
+ 
+  // #touchscreen is a transparent div on top of the game board and other elements 
+  $("#touchscreen").click(function(e) {
     createKiss(e.offsetX, e.offsetY);
     countKiss();
 
@@ -94,6 +105,7 @@ $(function() {
     }
   });
 
+  // Menu items
   $("#help").hover(function() {
     $("#kissthebutthole").fadeIn('fast');
   }, function() {

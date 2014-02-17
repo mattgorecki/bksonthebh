@@ -1,5 +1,5 @@
 body {
-  background-image: url('img/old_map.png');
+  background-image: url('/img/old_map.png');
   font-family: Helvetica, Arial, sans-serif;
   min-width: 1150px;
   padding: 0px;
@@ -23,7 +23,7 @@ body {
 }
 
 #help:hover {
-  color: #F2FFB3;
+  color: #c00;
   cursor: pointer;
 }
 
@@ -37,7 +37,7 @@ body {
 }
 
 #togglemusic:hover {
-  color: #F2FFB3;
+  color: #c00;
   cursor: pointer;
 }
 
@@ -47,6 +47,17 @@ body {
   left: 455px;
   z-index: 6;
   display:none;
+}
+
+#gamecontainer {
+  margin: 0 auto;
+  width: 800px;
+  height: 777px;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 #game {
@@ -60,11 +71,9 @@ body {
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
-  margin: 0 auto;
 }
 
 #touchscreen {
-  background-color: #f00;
   position: absolute;
   width: 800px;
   height: 777px;
@@ -98,6 +107,7 @@ body {
 }
 
 #adcontainer {
+  display: none;
   position: absolute;
   bottom: 0;
   right: 0;
