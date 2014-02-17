@@ -5,8 +5,10 @@ $(function() {
   var kisses = 0;
 
   var achievements = [
-    { kisses: 7, name: "Lucky 7" },
-    { kisses: 42, name: "Bring Your Towel" },
+    { id: 0, kisses: 7, name: "Lucky 7", applied: false },
+    { id: 1, kisses: 42, name: "Bring Your Towel", applied: false },
+    { id: 2, name: "Jesus Christ, I'm at work.", applied: false },
+    { id: 3, name: "That's what I call an educated guess.", applied: false }
   ]
 
   // Preload images into hidden img tag
@@ -123,19 +125,23 @@ $(function() {
   function checkForAchievement() {
     achievements.forEach(function(i) {
       if (i.kisses == kisses) {
-        applyAchievement(i.name);
+        applyAchievement(i.id);
       }
     });
   }
 
   // Add achievement
-  function applyAchievement(name) {
-    $("#achievementList").prepend("<li>" + name + "</li>");
+  function applyAchievement(id) {
+    if (!achievements[id].applied) {
+      $("#achievementList").prepend("<li>" + achievements[id].name + "</li>");
+      achievements[id].applied = true;
+    }
   }
 
   // Menu items
   $("#help").hover(function() {
     $("#kissthebutthole").fadeIn('fast');
+    applyAchievement(3);
   }, function() {
     $("#kissthebutthole").fadeOut('slow');
   });
@@ -145,6 +151,7 @@ $(function() {
       $("#togglemusic").css("text-decoration", "line-through");
       bgMusic.pause();
       playing = false;
+      applyAchievement(2);
     } else {
       $("#togglemusic").css("text-decoration", "none");
       bgMusic.play();
