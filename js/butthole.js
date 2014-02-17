@@ -4,6 +4,11 @@ $(function() {
   var puckerTimeout = 200;
   var kisses = 0;
 
+  var achievements = [
+    { kisses: 7, name: "Lucky 7" },
+    { kisses: 42, name: "Bring Your Towel" },
+  ]
+
   // Preload images into hidden img tag
   var preloads = [
     '/img/lipstick-64.png',
@@ -54,7 +59,7 @@ $(function() {
   function createKiss(x,y) {
     var kiss = $("<div>&nbsp;</div>");
     var uniqueId = _.uniqueId('kiss_');
-
+  
     kiss.addClass("kiss");
     kiss.attr("id", uniqueId);
     kiss.css("left", x - 32);
@@ -62,15 +67,13 @@ $(function() {
     kiss.css({ WebkitTransform: 'rotate(' + randomRotation() + 'deg)'});
     kiss.appendTo(gameElement);
 
-    gameElement.removeClass("relaxed").addClass("puckered");
+    puckerUp();
 
-    setTimeout(function() {
-      gameElement.removeClass("puckered").addClass("relaxed");
-    }, puckerTimeout);
-
+    // Smooch me
     var randomKissSound = sounds[Math.floor(Math.random() * (sounds.length - 1))];
     $.ionSound.play(randomKissSound);
 
+    // Remove the kiss element
     setTimeout(function(){
       $("#" + uniqueId).fadeOut("slow", function() {
         $(this).remove();
@@ -84,6 +87,15 @@ $(function() {
     $("#kissCount").html(kisses);
   }
 
+  // Pucker up that butthole
+  function puckerUp() {
+    gameElement.removeClass("relaxed").addClass("puckered");
+
+    setTimeout(function() {
+      gameElement.removeClass("puckered").addClass("relaxed");
+    }, puckerTimeout);
+  };
+
   // Helper function to give kisses a random rotation
   function randomRotation() {
     var min = -30;
@@ -96,6 +108,8 @@ $(function() {
     createKiss(e.offsetX, e.offsetY);
     countKiss();
 
+    checkForAchievement();
+
     if (kisses % Math.floor((Math.random()*10)+3) == 0) {
       gameElement.removeClass("relaxed").addClass("puckered2");
 
@@ -104,6 +118,20 @@ $(function() {
       }, puckerTimeout);
     }
   });
+
+  // Check achievements
+  function checkForAchievement() {
+    achievements.forEach(function(i) {
+      if (i.kisses == kisses) {
+        applyAchievement(i.name);
+      }
+    });
+  }
+
+  // Add achievement
+  function applyAchievement(name) {
+    $("#achievementList").prepend("<li>" + name + "</li>");
+  }
 
   // Menu items
   $("#help").hover(function() {
@@ -114,9 +142,11 @@ $(function() {
 
   $('#togglemusic').click(function() {
     if (!bgMusic.paused) {
+      $("#togglemusic").css("text-decoration", "line-through");
       bgMusic.pause();
       playing = false;
     } else {
+      $("#togglemusic").css("text-decoration", "none");
       bgMusic.play();
       playing = true;
     }
