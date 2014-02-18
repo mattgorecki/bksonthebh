@@ -1,27 +1,61 @@
+var gameElement = $("#game");
+var kissTimeout = 1000;
+var puckerTimeout = 200;
+var kisses = 0;
+var longestStreak = 0;
+var currentStreak = 0;
+var gameTimer = 0.0;
+var lastClickTimer = 0.0;
+
+var achievements = [
+  { id: 0, kisses: 7, name: "Lucky 7", description: "7 total clicks", applied: false },
+  { id: 1, kisses: 42, name: "Bring Your Towel", description: "42 total clicks", applied: false },
+  { id: 2, name: "Jesus Christ, I'm at work.", description: "Muted the audio", applied: false },
+  { id: 3, name: "That's what I call an educated guess.", description: "Hovered over Help Me", applied: false },
+  { id: 4, elapsedTime: 300, name: "Busy day at work.", description: "Browser window open for more than 5 minutes", applied: false },
+  { id: 5, lastClickTime: 300, name: "Idle buttholes are the devil's playground.", description: "No clicks for 5 minutes", applied: false }
+]
+
+// Preload images into hidden img tag
+var preloads = [
+  '/img/lipstick-64.png',
+  '/img/perfect-butthole-relaxed.jpg',
+  '/img/perfect-butthole-puckered.jpg',
+  '/img/perfect-butthole-puckered2.jpg'
+];
+
+// Load game sounds
+var sounds = [
+  'kiss1',
+  'kiss2',
+  'kiss3',
+  'kiss4'
+];
+
+
 $(function() {
   var gameElement = $("#game");
-  var kissTimeout = 1000;
-  var puckerTimeout = 200;
-  var kisses = 0;
 
-  var achievements = [
-    { id: 0, kisses: 7, name: "Lucky 7", applied: false },
-    { id: 1, kisses: 42, name: "Bring Your Towel", applied: false },
-    { id: 2, name: "Jesus Christ, I'm at work.", applied: false },
-    { id: 3, name: "That's what I call an educated guess.", applied: false }
-  ]
+  // Game Timer and Click Timer
+  var startTime = new Date().getTime();
+  var lastClickTime = new Date().getTime();
 
-  // Preload images into hidden img tag
-  var preloads = [
-    '/img/lipstick-64.png',
-    '/img/perfect-butthole-relaxed.jpg',
-    '/img/perfect-butthole-puckered.jpg',
-    '/img/perfect-butthole-puckered2.jpg'
-  ];
+  window.setInterval(function() {
+    var overallTime = new Date().getTime() - startTime;
+    lastClickTimer = new Date().getTime() - lastClickTime;
 
-  preloads.forEach(function(i){
-    $('<img/>')[0].src = i;
-  });
+    gameTimer = Math.floor(overallTime / 100) / 10;
+    lastClickTimer = Math.floor(lastClickTimer / 100) / 10;
+
+    if(Math.round(gameTimer) == gameTimer) { gameTimer += '.0'; }
+    if(Math.round(lastClickTimer) == lastClickTimer) { lastClickTimer += '.0'; }
+
+    $("#timer").html(gameTimer);
+    $("#clickTimer").html(lastClickTimer);
+
+    // Check for achievements
+    checkForAchievement();
+  }, 100);
 
   // Background audio
   var bgMusic = $('#audio-bg')[0];
@@ -35,23 +69,19 @@ $(function() {
   }, false);
   bgMusic.play();
 
-  // Load game sounds
-  var sounds = [
-    'kiss1',
-    'kiss2',
-    'kiss3',
-    'kiss4'
-  ];
-
   $.ionSound({
     sounds: sounds,
     path: "sounds/"
   });
 
+  preloads.forEach(function(i){
+    $('<img/>')[0].src = i;
+  });
+
   // Fade in the game image
   setTimeout(function() {
-    gameElement.fadeIn(5000);
-  }, 2000);
+    gameElement.fadeIn(2000);
+  }, 500);
 
   // Fade in the sidebar advertisement
   setTimeout(function() {
@@ -62,6 +92,8 @@ $(function() {
     var kiss = $("<div>&nbsp;</div>");
     var uniqueId = _.uniqueId('kiss_');
   
+    lastClickTime = new Date().getTime();
+
     kiss.addClass("kiss");
     kiss.attr("id", uniqueId);
     kiss.css("left", x - 32);
@@ -110,8 +142,6 @@ $(function() {
     createKiss(e.offsetX, e.offsetY);
     countKiss();
 
-    checkForAchievement();
-
     if (kisses % Math.floor((Math.random()*10)+3) == 0) {
       gameElement.removeClass("relaxed").addClass("puckered2");
 
@@ -121,11 +151,21 @@ $(function() {
     }
   });
 
-  // Check achievements
+  // Check for kiss click achievements
   function checkForAchievement() {
     achievements.forEach(function(i) {
-      if (i.kisses == kisses) {
-        applyAchievement(i.id);
+      if (!i.applied) {
+        if (i.hasOwnProperty('kisses') && i.kisses == kisses) {
+          applyAchievement(i.id);
+        }
+
+        if (i.hasOwnProperty('elapsedTime') && i.elapsedTime < gameTimer) {
+          applyAchievement(i.id);
+        }
+
+        if (i.hasOwnProperty('lastClickTime') && i.lastClickTime < lastClickTimer) {
+          applyAchievement(i.id);
+        }
       }
     });
   }

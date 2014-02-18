@@ -16,6 +16,9 @@ body {
 
 #achievementList {
   list-style: none;
+  -webkit-padding-start: 0;
+  -moz-padding-start: 0;
+  padding-left: 0;
 }
 
 #help {
@@ -109,6 +112,10 @@ body {
 #kissCount {
   font-size: 2.0em;
 }
+
+#streakCount {
+  font-size: 2.0em;
+} 
 
 #adcontainer {
   display: none;
