@@ -31,10 +31,13 @@ body {
   padding-left: 0;
 }
 
-#help {
+#menu {
   position: absolute;
-  bottom: 30px;
+  bottom: 25px;
   left: 25px;
+}
+
+#help {
   color: #000;
   z-index: 5;
 }
@@ -45,12 +48,8 @@ body {
 }
 
 #togglemusic {
-  position: absolute;
-  bottom: 25px;
-  left: 25px;
   color: #000;
   z-index: 5;
-  font-size: 0.8em;
 }
 
 #togglemusic:hover {

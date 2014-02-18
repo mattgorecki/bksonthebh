@@ -2,7 +2,7 @@ var gameElement = $("#game");
 var kissTimeout = 1000;
 var puckerTimeout = 200;
 var kisses = 0;
-var longestStreak = 1;
+var longestStreak = 0;
 var currentStreak = 0;
 var streakTimeout = 0.5;
 var gameTimer = 0.0;
@@ -16,7 +16,9 @@ var achievements = [
   { id: 4, elapsedTime: 300, name: "Busy day at work", description: "Browser window open for more than 5 minutes", applied: false },
   { id: 5, lastClickTime: 300, name: "Idle buttholes are the devil's playground", description: "No clicks for 5 minutes", applied: false },
   { id: 6, longestStreak: 13, name: "Work that butthole", description: "Click streak of 13", applied: false },
-  { id: 7, longestStreak: 100, name: "That butthole is raw", description: "Click streak of 100", applied: false }
+  { id: 7, longestStreak: 100, name: "That butthole is raw", description: "Click streak of 100", applied: false },
+  { id: 8, name: "BKs on the BH. +1", description: "Visit the POMO Facebook page", applied: false },
+  { id: 9, name: "Who pays for porn? Pervert.", description: "Clicked on the porn banner ad", applied: false }
 ]
 
 // Preload images into hidden img tag
@@ -27,7 +29,7 @@ var preloads = [
   '/img/perfect-butthole-puckered2.jpg'
 ];
 
-// Load game sounds
+// Load game sounds. Kisses are separate so we can randomly select one on click.
 var kissSounds = [
   'kiss1',
   'kiss2',
@@ -233,5 +235,9 @@ $(function() {
       playing = true;
     }
   });
-  
+
+  $("#pomolink").click(function() {
+    applyAchievement(8);
+  });
+
 });
