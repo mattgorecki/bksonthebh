@@ -6,6 +6,16 @@ body {
   margin: 0px;
 }
 
+#debug {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0; 
+  color: #fff; 
+  background-color: #000; 
+  z-index: 100000;
+}
+
 #title {
   position: absolute;
   top: 5px;
@@ -116,6 +126,10 @@ body {
 #streakCount {
   font-size: 2.0em;
 } 
+
+.green {
+  color: #13AD42;
+}
 
 #adcontainer {
   display: none;

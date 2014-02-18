@@ -2,18 +2,21 @@ var gameElement = $("#game");
 var kissTimeout = 1000;
 var puckerTimeout = 200;
 var kisses = 0;
-var longestStreak = 0;
+var longestStreak = 1;
 var currentStreak = 0;
+var streakTimeout = 0.5;
 var gameTimer = 0.0;
 var lastClickTimer = 0.0;
 
 var achievements = [
   { id: 0, kisses: 7, name: "Lucky 7", description: "7 total clicks", applied: false },
-  { id: 1, kisses: 42, name: "Bring Your Towel", description: "42 total clicks", applied: false },
-  { id: 2, name: "Jesus Christ, I'm at work.", description: "Muted the audio", applied: false },
-  { id: 3, name: "That's what I call an educated guess.", description: "Hovered over Help Me", applied: false },
-  { id: 4, elapsedTime: 300, name: "Busy day at work.", description: "Browser window open for more than 5 minutes", applied: false },
-  { id: 5, lastClickTime: 300, name: "Idle buttholes are the devil's playground.", description: "No clicks for 5 minutes", applied: false }
+  { id: 1, kisses: 42, name: "Bring your towel", description: "42 total clicks", applied: false },
+  { id: 2, name: "Jesus Christ, I'm at work", description: "Muted the audio", applied: false },
+  { id: 3, name: "That's what I call an educated guess", description: "Hovered over Help Me", applied: false },
+  { id: 4, elapsedTime: 300, name: "Busy day at work", description: "Browser window open for more than 5 minutes", applied: false },
+  { id: 5, lastClickTime: 300, name: "Idle buttholes are the devil's playground", description: "No clicks for 5 minutes", applied: false },
+  { id: 6, longestStreak: 13, name: "Work that butthole", description: "Click streak of 13", applied: false },
+  { id: 7, longestStreak: 100, name: "That butthole is raw", description: "Click streak of 100", applied: false }
 ]
 
 // Preload images into hidden img tag
@@ -25,13 +28,16 @@ var preloads = [
 ];
 
 // Load game sounds
-var sounds = [
+var kissSounds = [
   'kiss1',
   'kiss2',
   'kiss3',
-  'kiss4'
+  'kiss4',
 ];
 
+var sounds = [
+  'sexytime'
+]
 
 $(function() {
   var gameElement = $("#game");
@@ -47,8 +53,14 @@ $(function() {
     gameTimer = Math.floor(overallTime / 100) / 10;
     lastClickTimer = Math.floor(lastClickTimer / 100) / 10;
 
-    if(Math.round(gameTimer) == gameTimer) { gameTimer += '.0'; }
-    if(Math.round(lastClickTimer) == lastClickTimer) { lastClickTimer += '.0'; }
+    if (Math.round(gameTimer) == gameTimer) { gameTimer += '.0'; }
+    if (Math.round(lastClickTimer) == lastClickTimer) { lastClickTimer += '.0'; }
+
+    if (lastClickTimer > streakTimeout) {
+      currentStreak = 0;
+      $("#longestStreakCount").removeClass("green");
+      updateStreak();
+    }
 
     $("#timer").html(gameTimer);
     $("#clickTimer").html(lastClickTimer);
@@ -70,7 +82,7 @@ $(function() {
   bgMusic.play();
 
   $.ionSound({
-    sounds: sounds,
+    sounds: sounds.concat(kissSounds),
     path: "sounds/"
   });
 
@@ -92,7 +104,7 @@ $(function() {
     var kiss = $("<div>&nbsp;</div>");
     var uniqueId = _.uniqueId('kiss_');
   
-    lastClickTime = new Date().getTime();
+    countKiss();
 
     kiss.addClass("kiss");
     kiss.attr("id", uniqueId);
@@ -104,7 +116,7 @@ $(function() {
     puckerUp();
 
     // Smooch me
-    var randomKissSound = sounds[Math.floor(Math.random() * (sounds.length - 1))];
+    var randomKissSound = kissSounds[Math.floor(Math.random() * (kissSounds.length))];
     $.ionSound.play(randomKissSound);
 
     // Remove the kiss element
@@ -115,10 +127,20 @@ $(function() {
     }, kissTimeout);
   }
 
-  // Increment kisses and update score
+  // Increment kisses, streak and update score
   function countKiss() {
     kisses++;
+    if (lastClickTimer < streakTimeout) {
+      currentStreak++;  
+      if (currentStreak > longestStreak) {
+        longestStreak = currentStreak;
+      }
+    } else {
+      currentStreak = 0;
+    }
+
     $("#kissCount").html(kisses);
+    updateStreak();
   }
 
   // Pucker up that butthole
@@ -139,8 +161,8 @@ $(function() {
  
   // #touchscreen is a transparent div on top of the game board and other elements 
   $("#touchscreen").click(function(e) {
+    lastClickTime = new Date().getTime();
     createKiss(e.offsetX, e.offsetY);
-    countKiss();
 
     if (kisses % Math.floor((Math.random()*10)+3) == 0) {
       gameElement.removeClass("relaxed").addClass("puckered2");
@@ -166,6 +188,10 @@ $(function() {
         if (i.hasOwnProperty('lastClickTime') && i.lastClickTime < lastClickTimer) {
           applyAchievement(i.id);
         }
+
+        if (i.hasOwnProperty('longestStreak') && i.longestStreak < longestStreak) {
+          applyAchievement(i.id);
+        }
       }
     });
   }
@@ -175,6 +201,15 @@ $(function() {
     if (!achievements[id].applied) {
       $("#achievementList").prepend("<li>" + achievements[id].name + "</li>");
       achievements[id].applied = true;
+    }
+  }
+
+  function updateStreak() {
+    $("#longestStreakCount").html(longestStreak);
+    $("#currentStreakCount").html(currentStreak);
+
+    if (longestStreak == currentStreak) {
+      $("#longestStreakCount").addClass("green");
     }
   }
 
