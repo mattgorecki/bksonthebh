@@ -38,7 +38,39 @@ var kissSounds = [
 ];
 
 var sounds = [
-  'sexytime'
+  'sexytime',
+  'countit',
+  'fantastic',
+  'fromdowntown',
+  'fromtheoutsidenogood',
+  'heresthetip',
+  'ohmyhesonfire',
+  'uglyshot',
+  'boomshakalaka',
+  'for2',
+  'fromtheoutsideyes',
+  'heatingup',
+  'hesonfire',
+  'jamsitin',
+  'razzledazzle',
+  'takethat',
+  'therebound',
+  'breakblock',
+  'bump',
+  'fireball',
+  'jump-small',
+  'goal',
+  'kick',
+  'powerup',
+  'raccoon',
+  'smb_powerup',
+  'stomp',
+  'thud',
+  'treasure_box', 
+  'vine',
+  'coin',
+  'flame',
+  'generic-event'
 ]
 
 $(function() {
