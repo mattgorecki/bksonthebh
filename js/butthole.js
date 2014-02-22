@@ -76,6 +76,19 @@ var sounds = [
 $(function() {
   var gameElement = $("#game");
 
+  var gameCanvas = document.getElementById("gamecanvas");
+  var ctx = gameCanvas.getContext("2d");
+  ctx.mozImageSmoothingEnabled = false;
+  ctx.webkitImageSmoothingEnabled = false;
+  ctx.imageSmoothingEnabled = false;
+
+  var gameBG = new Image();
+  gameBG.onload = function() {
+    pixelate(6);
+  }
+
+  gameBG.src = 'http://bksonthebh.com/img/perfect-butthole-relaxed.jpg';
+
   // Game Timer and Click Timer
   var startTime = new Date().getTime();
   var lastClickTime = new Date().getTime();
@@ -124,15 +137,26 @@ $(function() {
     $('<img/>')[0].src = i;
   });
 
-  // Fade in the game image
-  setTimeout(function() {
-    gameElement.fadeIn(2000);
-  }, 500);
-
   // Fade in the sidebar advertisement
   setTimeout(function() {
     $("#adcontainer").show(5000);
   }, 7000);
+
+  function pixelate(v) {
+    // ctx.drawImage(gameBG, 0, 0);
+    /// if in play mode use that value, else use slider value
+    var size = v * 0.01,
+        /// cache scaled width and height
+        w = gameCanvas.width * size,
+        h = gameCanvas.height * size;
+
+    /// draw original image to the scaled size
+    ctx.drawImage(gameBG, 0, 0, w, h);
+
+    /// then draw that scaled image thumb back to fill canvas
+    /// As smoothing is off the result will be pixelated
+    ctx.drawImage(gameCanvas, 0, 0, w, h, 0, 0, gameCanvas.width, gameCanvas.height);
+  }
 
   function createKiss(x,y) {
     var kiss = $("<div>&nbsp;</div>");
@@ -270,6 +294,14 @@ $(function() {
 
   $("#pomolink").click(function() {
     applyAchievement(8);
+  });
+
+  $("#japan").click(function() {
+    pixelate(5);
+  });
+
+  $("#merica").click(function() {
+    pixelate(25);
   });
 
 });

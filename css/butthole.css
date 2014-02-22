@@ -74,14 +74,25 @@ body {
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
+  z-index: 1;
+}
+
+#gamecanvas {
+  z-index: 10;
+  position: absolute;
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -o-crisp-edges;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
 }
 
 #game {
-  position: relative;
+  position: absolute;
   width: 800px;
   height: 777px;
-  z-index: 3;
-  display: none;
+  z-index: 50;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -96,18 +107,6 @@ body {
   z-index: 9999;
   margin: 0 auto;
   opacity: 0.5;
-}
-
-#game.relaxed {
-  background-image: url('/img/perfect-butthole-relaxed.jpg');
-}
-
-#game.puckered {
-  background-image: url('/img/perfect-butthole-puckered.jpg');
-}
-
-#game.puckered2 {
-  background-image: url('/img/perfect-butthole-puckered2.jpg');
 }
 
 .kiss {
